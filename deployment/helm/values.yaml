@@ -13,6 +13,7 @@ inferenceCapability:
     port: 9000
   pvc:
     name: inference-model-pvc
+    storageClassName:
     accessModes:
       - ReadWriteOnce
     storage: 3Gi
@@ -59,6 +60,7 @@ indexCapability:
         claimName: indexing-model-storage
   indexingModelPVC:
     name: indexing-model-storage
+    storageClassName:
     accessMode: "ReadWriteOnce"
     storage: "3Gi"
 

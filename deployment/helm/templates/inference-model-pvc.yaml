@@ -3,7 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .Values.inferenceCapability.pvc.name }}
 spec:
-  accessModes: 
+  {{- if .Values.inferenceCapability.pvc.name }}
+  storageClassName: {{ .Values.inferenceCapability.pvc.storageClassName }}
+  {{- end }}
+  accessModes:
     {{- toYaml .Values.inferenceCapability.pvc.accessModes | nindent 4 }}
   resources:
     requests:
