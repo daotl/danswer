@@ -45,7 +45,7 @@ class ZulipConnector(LoadConnector, PollConnector):
         # zuliprc file. This reverts them back to newlines.
         contents_spaces_to_newlines = contents.replace(" ", "\n")
         # create a temporary zuliprc file
-        tempdir = tempfile.tempdir
+        tempdir = tempfile.gettempdir()
         if tempdir is None:
             raise Exception("Could not determine tempfile directory")
         config_file = os.path.join(tempdir, f"zuliprc-{self.realm_name}")
