@@ -39,5 +39,5 @@ class GetMessagesResponse(BaseModel):
     found_oldest: Optional[bool] = None
     found_newest: Optional[bool] = None
     history_limited: Optional[bool] = None
-    anchor: Optional[str] = None
+    anchor: Optional[int] = None
     messages: List[Message] = Field(default_factory=list)
