@@ -19,7 +19,7 @@ class Message(BaseModel):
     sender_realm_str: str
     subject: str
     topic_links: Optional[List[Any]] = None
-    last_edit_timestamp: Optional[int]
+    last_edit_timestamp: Optional[int] = None
     edit_history: Any = None
     reactions: List[Any]
     submessages: List[Any]
@@ -27,8 +27,8 @@ class Message(BaseModel):
     display_recipient: Optional[str] = None
     type: Optional[str] = None
     stream_id: int
-    avatar_url: Optional[str]
-    content_type: Optional[str]
+    avatar_url: Optional[str] = None
+    content_type: Optional[str] = None
     rendered_content: Optional[str] = None
 
 
