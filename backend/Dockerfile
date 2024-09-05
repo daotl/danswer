@@ -18,7 +18,9 @@ RUN echo "DANSWER_VERSION: ${DANSWER_VERSION}"
 # curl included just for users' convenience
 # zip for Vespa step futher down
 # ca-certificates for HTTPS
-RUN apt-get update && \
+RUN sed -i 's|http://deb.debian.org/debian|http://mirrors.aliyun.com/debian|g' /etc/apt/sources.list.d/debian.sources && \
+    sed -i 's|http://security.debian.org/debian-security|http://mirrors.aliyun.com/debian-security|g' /etc/apt/sources.list.d/debian.sources && \
+    apt-get update && \
     apt-get install -y \
         cmake \
         curl \
@@ -39,7 +41,8 @@ RUN apt-get update && \
 # Remove py which is pulled in by retry, py is not needed and is a CVE
 COPY ./requirements/default.txt /tmp/requirements.txt
 COPY ./requirements/ee.txt /tmp/ee-requirements.txt
-RUN pip install --no-cache-dir --upgrade \
+RUN PIP_INDEX_URL=https://pypi.tuna.tsinghua.edu.cn/simple \
+    pip install --no-cache-dir --upgrade \
         -r /tmp/requirements.txt \
         -r /tmp/ee-requirements.txt && \
     pip uninstall -y py && \
@@ -68,7 +71,7 @@ RUN apt-get update && \
     rm -f /usr/local/lib/python3.11/site-packages/tornado/test/test.key
 
 # Pre-downloading models for setups with limited egress
-RUN python -c "from tokenizers import Tokenizer; \
+RUN HF_ENDPOINT=https://hf-mirror.com python -c "from tokenizers import Tokenizer; \
 Tokenizer.from_pretrained('nomic-ai/nomic-embed-text-v1')"
 
 
